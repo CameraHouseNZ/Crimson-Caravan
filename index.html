@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallax Example</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <section id="parallax" class="section">
+        <div class="inside-view">
+            <div class="inside-container">
+                <img src="images/inside-left.png" alt="Shop Interior" class="inside-main">
+                <div class="dust-container"></div>
+            </div>
+        </div>
+        <div class="audio-controls">
+            <audio id="narration" src="Audio/narration.mp3"></audio>
+            <audio id="insideSounds" src="Audio/Inside-sounds.mp3" loop></audio>
+            <audio id="outsideSounds" src="Audio/outside.mp3" loop></audio>
+            <audio id="musicTrack" src="Audio/The-Crimson-Caravan-intro.m4a" loop></audio>
+            <audio id="insideNarration" src="Audio/narration-inside.mp3"></audio>
+            <div class="audio-btn-container">
+                <span class="audio-label">Voice</span>
+                <button id="playPause" class="audio-btn">
+                    <span class="play-icon">▶</span>
+                    <span class="pause-icon" style="display:none;">⏸</span>
+                </button>
+            </div>
+            <div class="audio-btn-container">
+                <span class="audio-label">Music</span>
+                <button id="musicPlayPause" class="audio-btn">
+                    <span class="play-icon">▶</span>
+                    <span class="pause-icon" style="display:none;">⏸</span>
+                </button>
+            </div>
+            <div class="master-volume">
+                <span class="volume-label">Volume</span>
+                <input type="range" id="masterVolume" min="0" max="100" value="100">
+                <span class="volume-value">100%</span>
+            </div>
+        </div>
+        <div class="parallax-container" data-current-effect="hover">
+            <img src="images/parallax/sky.png" class="parallax-layer sky" alt="Sky">
+            <img src="images/parallax/mountains.png" class="parallax-layer mountains" alt="Mountains">
+            <img src="images/parallax/ground.png" class="parallax-layer ground" alt="Ground">
+            <div class="animated-shop parallax-layer"></div>
+            <div class="shop-glow parallax-layer"></div>
+            <div class="shop-clickable parallax-layer"></div>
+            <div class="car-container parallax-layer">
+                <img src="images/parallax/car.png" class="car" alt="Car">
+            </div>
+            <img src="images/parallax/cactus.png" class="parallax-layer cactus" alt="Cactus">
+            <img src="images/parallax/rocks.png" class="parallax-layer rocks" alt="Rocks">
+        </div>
+    </section>
+    <button class="back-button">← Back</button>
+    <div class="grain-overlay"></div>
+    <div class="vignette"></div>
+    <div class="track-list-menu">
+        <h3>Music Tracks</h3>
+        <div class="track-item">
+            <span class="track-name">1. The Crimson Caravan - Intro</span>
+            <button class="track-btn" data-track="intro">
+                <span class="play-icon">▶</span>
+                <span class="pause-icon">⏸</span>
+            </button>
+        </div>
+        <div class="track-item">
+            <span class="track-name">2. The Crimson Caravan - Theme</span>
+            <button class="track-btn" data-track="theme">
+                <span class="play-icon">▶</span>
+                <span class="pause-icon">⏸</span>
+            </button>
+        </div>
+    </div>
+    <audio id="themeTrack" src="Audio/The-Crimson-Caravan-theme.m4a" loop></audio>
+    <button class="hamburger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="mixer-menu">
+        <h3>Audio Mixer</h3>
+        <div class="mixer-item">
+            <span class="mixer-label">Voice</span>
+            <input type="range" class="mixer-slider" id="voiceVolume" min="0" max="100" value="50">
+            <span class="mixer-value">50%</span>
+        </div>
+        <div class="mixer-item">
+            <span class="mixer-label">Music</span>
+            <input type="range" class="mixer-slider" id="musicVolume" min="0" max="100" value="30">
+            <span class="mixer-value">30%</span>
+        </div>
+        <div class="mixer-item">
+            <span class="mixer-label">Ambience</span>
+            <input type="range" class="mixer-slider" id="ambienceVolume" min="0" max="100" value="40">
+            <span class="mixer-value">40%</span>
+        </div>
+    </div>
+    <button class="skip-narration">
+        <span class="skip-text">Skip Narration</span>
+        <span class="skip-icon">⏭</span>
+    </button>
+    <script src="js/main.js"></script>
+</body>
+</html> 
