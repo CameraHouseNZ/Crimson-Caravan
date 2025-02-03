@@ -1,0 +1,1055 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}
+
+.section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Parallax Controls */
+.parallax-controls {
+    display: none;
+}
+
+.control-btn {
+    display: none;
+}
+
+#parallax h2 {
+    display: none;
+}
+
+/* Parallax Container */
+.parallax-container {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+/* Update overlay for darkness with red tint */
+.parallax-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(20, 0, 0, 0.9);
+    mix-blend-mode: multiply;
+    z-index: 8;
+    animation: sunrise 4s ease-out forwards;
+}
+
+.parallax-layer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: auto;
+    pointer-events: none;
+    transition: transform 0.1s ease-out;
+    transform: translate(-50%, -50%);
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+/* Layer specific styles */
+.sky { 
+    z-index: 1; 
+    width: 110%;
+    animation: skyColor 4s ease-out forwards;
+    position: relative;
+}
+
+/* Add gradient overlay to sky */
+.sky::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, 
+        rgba(255, 100, 0, 0.6) 0%,    /* More intense orange */
+        rgba(255, 30, 30, 0.5) 15%,   /* More intense red */
+        rgba(128, 0, 50, 0.4) 30%,    /* Red-purple */
+        transparent 50%
+    );
+    mix-blend-mode: soft-light;
+    animation: gradientRise 4s ease-out forwards;
+}
+
+.mountains { 
+    z-index: 2; 
+    width: 110%;
+    animation: mountainColor 4s ease-out forwards;
+}
+
+.ground {
+    z-index: 3;    /* Between mountains and shop */
+    width: 120%;
+    border: 2px solid red; /* Temporary debug border */
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.shop, .animated-shop { 
+    z-index: 3; 
+    width: 100%;
+}
+
+.car-container { 
+    z-index: 6;      /* Increased to be above ground */
+    width: 100%;
+}
+
+.cactus { 
+    z-index: 7;      /* Adjusted to be above car */
+    width: 100%;
+    left: 55%;
+}
+
+.rocks { 
+    z-index: 8;      /* Adjusted to be topmost */
+    width: 120%;
+    left: 50%;
+}
+
+/* Animations */
+@keyframes hover {
+    0%, 100% { transform: translate(-50%, -52%); }
+    50% { transform: translate(-50%, -48%); }
+}
+
+/* Animated elements */
+/* Remove these wheel-related styles */
+@keyframes spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.wheel {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 4px solid #333;
+    border-radius: 50%;
+    animation: spin 2s infinite linear;
+}
+
+/* Content styles */
+/* Remove this content styles section */
+.content {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-width: 800px;
+    width: 90%;
+    z-index: 7;
+}
+
+/* Car styles */
+.car {
+    width: 100%;
+    height: auto;
+}
+
+/* Door styles */
+.animated-door {
+    position: absolute;
+    width: 4%;          /* Match debug box width */
+    height: 9%;         /* Match debug box height */
+    top: 19vh;          /* Match debug box position */
+    left: 33%;          /* Match debug box position */
+    transform: translate(-50%, 0);
+    z-index: 3;
+    cursor: pointer;
+    background-image: url('../images/parallax/shop-door.png');
+    background-size: 100% 100%;  /* Ensure image fills the space */
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: all;
+}
+
+
+.animated-door:hover {
+    filter: brightness(1.1);
+}
+
+.animated-shop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    width: 110%;
+    height: 100%;
+    background-image: url('../images/animation/shop-1.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    pointer-events: all !important; /* Make sure it's clickable */
+}
+
+@keyframes shopGlow {
+    0%, 60% {
+        background-image: url('../images/animation/shop-1-glow.png');
+    }
+    100% {
+        background-image: url('../images/animation/shop-1.png');
+    }
+}
+
+@keyframes shopFlicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Remove these animation keyframes */
+@keyframes float {
+    0%, 100% { transform: translate(-50.5%, -50%); }
+    50% { transform: translate(-49.5%, -50%); }
+}
+
+@keyframes glow {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+}
+
+/* Remove these element styles */
+.clouds, .sun, .cloud1, .cloud2, .cloud3 {
+    display: none;
+}
+
+/* Reset any filters on other layers */
+/* .parallax-layer {
+    filter: none;
+    mix-blend-mode: normal;
+} */
+
+/* Reset movement values in JS back to original */
+
+/* Update sunrise animation with more red */
+@keyframes sunrise {
+    0% {
+        background-color: rgba(20, 0, 0, 0.9);  /* Dark red */
+        mix-blend-mode: multiply;
+    }
+    30% {
+        background-color: rgba(40, 0, 0, 0.8);  /* Medium dark red */
+        mix-blend-mode: multiply;
+    }
+    50% {
+        background-color: rgba(60, 10, 10, 0.7);  /* Lighter red */
+        mix-blend-mode: multiply;
+    }
+    70% {
+        background-color: rgba(80, 20, 20, 0.5);  /* Even lighter red */
+        mix-blend-mode: multiply;
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0);
+        mix-blend-mode: normal;
+    }
+}
+
+/* Update sky color animation */
+@keyframes skyColor {
+    0% {
+        filter: brightness(0.1) saturate(0.2);
+    }
+    30% {
+        filter: brightness(0.3) saturate(0.6);
+    }
+    60% {
+        filter: brightness(0.6) saturate(0.8);
+    }
+    100% {
+        filter: brightness(1) saturate(1);
+    }
+}
+
+/* Update gradient colors to be more intense */
+@keyframes gradientRise {
+    0% {
+        opacity: 0;
+        transform: translateY(50%);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(30%);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(0%);
+    }
+}
+
+@keyframes mountainColor {
+    0% {
+        filter: brightness(0.05) saturate(0.2);
+    }
+    40% {
+        filter: brightness(0.2) saturate(0.4);
+    }
+    70% {
+        filter: brightness(0.5) saturate(0.7);
+    }
+    100% {
+        filter: brightness(1) saturate(1);
+    }
+}
+
+/* Add glowing sign styles */
+.shop-sign {
+    display: none;  /* Or you can delete this entire block */
+}
+
+/* Update shop glow to be more visible */
+.shop-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 110%;
+    height: 100%;
+    z-index: 9;
+    background-image: url('../images/parallax/shop-glow-1.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    animation: none;
+}
+
+/* Update shop glow styles */
+.shop-glow.pre-interaction {
+    animation: none; /* Remove the previous animation */
+    background-image: url('../images/parallax/shop-glow-1.png'); /* Base glow always on */
+    opacity: 1;
+}
+
+/* Update audio controls layout */
+.audio-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px 15px;
+    border-radius: 20px;
+}
+
+.audio-btn-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.audio-label {
+    color: white;
+    font-size: 14px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.audio-btn {
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.audio-btn:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+.audio-btn.playing .play-icon {
+    display: none;
+}
+
+.audio-btn.playing .pause-icon {
+    display: block;
+}
+
+/* Update the click prompt to use the welcome image */
+.click-prompt {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 11;
+    transition: opacity 1s ease;
+    background: none;  /* Remove the background */
+    padding: 0;
+}
+
+.click-prompt img {
+    width: 300px;  /* Increased from 200px to 300px */
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s ease;  /* Optional: add hover effect */
+}
+
+/* Optional: add hover effect */
+.click-prompt img:hover {
+    transform: scale(1.05);
+}
+
+/* Add paused state for animations */
+.parallax-container.pre-interaction::after {
+    animation: none;
+    background-color: rgba(20, 0, 0, 0.9);
+    mix-blend-mode: multiply;
+}
+
+.sky.pre-interaction,
+.mountains.pre-interaction {
+    animation: none;
+}
+
+.sky.pre-interaction {
+    filter: brightness(0.1) saturate(0.2);
+}
+
+.mountains.pre-interaction {
+    filter: brightness(0.05) saturate(0.2);
+}
+
+/* Update inside view styles */
+.inside-view {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 20;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease;
+    overflow: hidden;
+}
+
+.inside-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.inside-main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: auto;
+    transition: transform 0.1s ease-out;
+}
+
+/* Add pan hint indicator */
+.pan-hint {
+    position: absolute;
+    right: 20px; /* Changed from left to right */
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 24px;
+    animation: panPulse 2s infinite;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.pan-hint.visible {
+    opacity: 1;
+}
+
+@keyframes panPulse {
+    0%, 100% { transform: translateY(-50%) translateX(0); }
+    50% { transform: translateY(-50%) translateX(10px); } /* Changed from -10px to 10px */
+}
+
+/* Main image specific styles */
+.inside-view img {
+    filter: brightness(0.7) blur(2px);
+    transition: transform 1.5s ease-out, filter 1.5s ease-out;
+}
+
+/* Add warm filter overlay */
+.warm-filter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 147, 41, 0.2) 0%,
+        rgba(255, 147, 41, 0.3) 100%
+    );
+    mix-blend-mode: overlay; /* Changed from soft-light for more visibility */
+    opacity: 0;
+    transition: opacity 0.1s ease-out; /* Faster transition */
+    pointer-events: none;
+}
+
+/* Visibility states */
+.inside-view.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.inside-view.visible img {
+    transform: scale(1.1);
+    filter: brightness(1) blur(0);
+}
+
+.inside-view.visible .inside-light {
+    opacity: 1;
+}
+
+/* Lens effect */
+.inside-view::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: inset 0 0 150px rgba(0,0,0,0.9);
+    border-radius: 5%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.5s ease-out;
+}
+
+.inside-view.visible::after {
+    opacity: 1;
+}
+
+/* Add back button styles */
+.back-button {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    right: auto;
+    top: auto;
+    z-index: 21;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.back-button.visible {
+    opacity: 1;
+}
+
+.back-button:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: scale(1.05);
+}
+
+/* Remove the previous zoom animation */
+@keyframes zoomIn {
+    0% {
+        transform: scale(1) perspective(1000px) rotateX(2deg);
+        filter: brightness(0.7) blur(2px);
+    }
+    100% {
+        transform: scale(1.1) perspective(1000px) rotateX(0deg);
+        filter: brightness(1) blur(0);
+    }
+}
+
+/* Update clickable shop area styles */
+.shop-clickable {
+    position: absolute;
+    top: 60%;
+    left: 37%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    height: 30%;
+    z-index: 15;
+    cursor: pointer;
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* Active state without debug styling */
+.shop-clickable.active {
+    pointer-events: all;
+    opacity: 0;  /* Keep it invisible but clickable */
+}
+
+/* Update dust particle styles */
+.dust-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 2s ease-out;
+}
+
+.dust-particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+    animation: float-dust var(--duration) ease-in-out infinite;
+}
+
+@keyframes float-dust {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    20% {
+        opacity: var(--opacity);
+    }
+    80% {
+        opacity: var(--opacity);
+    }
+    100% {
+        transform: translateY(var(--travel-y)) translateX(var(--travel-x));
+        opacity: 0;
+    }
+}
+
+.inside-view.visible .dust-container {
+    opacity: 1;
+}
+
+/* Update film grain effect */
+.grain-overlay {
+    position: fixed;
+    top: -150%;
+    left: -150%;
+    width: 400%;
+    height: 400%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.04;  /* Reduced from 0.08 */
+    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%" height="100%" filter="url(%23noise)"/%3E%3C/svg%3E');
+    animation: grain 2.5s steps(4) infinite;  /* Slower animation with fewer steps */
+}
+
+@keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-0.3%, -0.3%); }
+    50% { transform: translate(0.3%, 0.3%); }
+    75% { transform: translate(-0.3%, 0.3%); }
+}
+
+/* Add vignette effect */
+.vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9998;
+    background: radial-gradient(
+        circle,
+        transparent 50%,
+        rgba(0, 0, 0, 0.3) 150%
+    );
+}
+
+/* Track list menu styles */
+.track-list-menu {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    z-index: 1000;
+    min-width: 300px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+.track-list-menu.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.track-list-menu h3 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 8px;
+}
+
+.track-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 8px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.track-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.track-name {
+    font-size: 14px;
+    margin-right: 15px;
+}
+
+.track-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.track-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: white;
+}
+
+.track-btn .pause-icon {
+    display: none;
+}
+
+.track-btn.playing .play-icon {
+    display: none;
+}
+
+.track-btn.playing .pause-icon {
+    display: block;
+}
+
+/* Update master volume position and label */
+.master-volume {
+    position: static; /* Remove fixed positioning */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    padding-left: 20px;
+    margin-left: 10px;
+}
+
+/* Update volume label */
+.volume-label {
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.volume-value {
+    font-size: 14px;
+    min-width: 40px;
+}
+
+#masterVolume {
+    width: 100px;
+    height: 4px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    outline: none;
+}
+
+#masterVolume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#masterVolume::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+/* Add hamburger menu styles */
+.hamburger-menu {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background: rgba(0, 0, 0, 0.8);
+    border: none;
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.hamburger-menu span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.hamburger-menu:hover span {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.hamburger-menu.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Add mixer menu styles */
+.mixer-menu {
+    position: fixed;
+    top: 70px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    z-index: 1000;
+    min-width: 250px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.mixer-menu.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.mixer-menu h3 {
+    margin: 0 0 15px 0;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 8px;
+}
+
+.mixer-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.mixer-label {
+    font-size: 14px;
+    min-width: 70px;
+}
+
+.mixer-value {
+    font-size: 14px;
+    min-width: 40px;
+}
+
+.mixer-slider {
+    flex: 1;
+    height: 4px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    outline: none;
+}
+
+.mixer-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Update audio control buttons */
+.audio-btn, .track-btn {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
+.audio-btn:hover, .track-btn:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+/* Add skip narration button styles */
+.skip-narration {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+.skip-narration.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.skip-text {
+    margin-right: 4px;
+}
+
+.skip-icon {
+    font-size: 16px;
+}
+
+@keyframes pulse {
+    0% {
+        transform: translateX(-50%) scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.2);
+    }
+    70% {
+        transform: translateX(-50%) scale(1.05);
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+    100% {
+        transform: translateX(-50%) scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
+
+.skip-narration:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: translateX(-50%) scale(1.05);
+}
+
+/* Remove any existing transforms on the container */
+.inside-view.visible .inside-main,
+.inside-view.visible .inside-light {
+    transform: translateX(0); /* Start from right side */
+}
+
+.inside-highlight {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.2); /* Example highlight style */
+    pointer-events: none;
+}
+
+.highlight {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    animation: flicker 8s infinite;
+    background: radial-gradient(
+        circle at 50% 50%,
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%
+    );
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 0.7; }
+    5% { opacity: 0.2; }
+    10% { opacity: 0.8; }
+    15% { opacity: 0.4; }
+    20% { opacity: 0.7; }
+    25% { opacity: 0.3; }
+    30% { opacity: 0.7; }
+    35% { opacity: 0.5; }
+    40% { opacity: 0.7; }
+    45% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+    55% { opacity: 0.3; }
+    60% { opacity: 0.7; }
+} 
